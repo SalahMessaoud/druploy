@@ -30,11 +30,12 @@ server is to use the accompanying chef Drupal recipe [Drupal Cookbook](https://g
 2. cp examples/servers.yaml servers.yaml
 2.1 Configure the correct usernames and passwords
 
+    sudo ln -s /path/to/checkout/bin/druploy /usr/bin/druploy
+
 # Usage #
 
 The following example will collect code, database and files from a project not managed by Druploy, and deploy them 
-to the domain test.yourcompany.com on your named "live" in your servers.yaml
+to the domain www.mydrupalsite.com on the server named "live" in your servers.yaml
 
-    fab server:local source:/path/to/drupal/sites/default database:updating=True files:updating=True server:live project:myproject deploy:test domain:test.yourcompany.com
-
+    druploy server:local source:/path/to/drupal/sites/default code:git@git.domain.com:repo.git,branch=test database:updating=True files:updating=True server:live project:new deploy:live domain:www.mydrupalsite.com
 
