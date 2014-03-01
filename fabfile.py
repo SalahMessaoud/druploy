@@ -46,8 +46,12 @@ def init():
         raise
 
 
+@task
 def server(name=None):
-    config = Utils.load('servers.yaml', name)
+    """
+        Set the current server
+    """
+    config = Utils.load(os.path.join(env.local_path, 'servers.yaml'), name)
     env.hosts = [config['host']]
     env.host_string = config['host']
     env.user = config['user']
@@ -57,7 +61,11 @@ def server(name=None):
     env.database_server = MySQLDatabaseServer(su=config['mysql']['su'], su_password=config['mysql']['supassword'], user=config['mysql']['user'], password=config['mysql']['password'])
 
 
+@task
 def project(name=None):
+    """
+    Set the current project for Druploy
+    """
     execute(init)
     try:
         env.project = ManagedProject(env.server, name)
@@ -71,7 +79,11 @@ def project(name=None):
         Utils.error("Could not create project, ending")
 
 
+@task
 def project_create(name=None):
+    """
+    Create a project on a server
+    """
     execute(init)
     try:
         Project.create(Project(name, env.server))
@@ -79,7 +91,11 @@ def project_create(name=None):
         puts("Could not create project, ending")
 
 
+@task
 def project_list(archive=False):
+    """
+    List all projects on a server
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -89,7 +105,11 @@ def project_list(archive=False):
         Utils.error("Could not list projects, ending")
 
 
+@task
 def deployment_list(project=None):
+    """
+    List all deployments for a project (optional) on a server
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -102,7 +122,12 @@ def deployment_list(project=None):
         raise
 
 
+@task
 def source(drupal_root=None):
+    """
+    When taking the database/files from a project not managed by Druploy, tell it
+    where the drupal root is
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -113,7 +138,11 @@ def source(drupal_root=None):
         raise
 
 
+@task
 def code(url=None, branch='master', revision=None):
+    """
+    Tell Druploy where to get the code and what branch/revision to deploy
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -123,7 +152,11 @@ def code(url=None, branch='master', revision=None):
         raise
 
 
+@task
 def database(updating=True, resetting=False, installing=False):
+    """
+    Tell Druploy what method to use to deploy the database
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -140,7 +173,11 @@ def database(updating=True, resetting=False, installing=False):
         abort("Ending")
 
 
+@task
 def files(updating=True, resetting=False):
+    """
+    Tell Druploy what method to use to deploy the files
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -155,7 +192,11 @@ def files(updating=True, resetting=False):
         abort("Ending")
 
 
+@task
 def deploy(name=None):
+    """
+    Run the deployment on the configured code, files and database
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -176,7 +217,11 @@ def deploy(name=None):
         raise
 
 
+@task
 def domain(name=None, aliases=[]):
+    """
+    Configure a domain to run on the current deployment
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -190,7 +235,11 @@ def domain(name=None, aliases=[]):
         abort("Ending")
 
 
+@task
 def drush_alias_create():
+    """
+    Create drush aliases for each deployment in each project
+    """
     execute(init)
     try:
         with hide(*env.clean):
@@ -209,26 +258,3 @@ def drush_alias_create():
         raise
 
 
-
-'''
-def update_db():
-def update_files():
-def backup_code():
-def backup_db():
-def backup_files():
-
-def drush_alias():
-    for project in env.aps.projects():
-        for deployment in project.deployments():
-            drush.create_alias(deployment)
-
-
-def drush_remote_alias():
-    env.aps = Server('/var/www/ap', env.host_string)
-    for project in env.aps.projects():
-        for deployment in project.deployments():
-            with settings(host_string='localhost'):
-                drush.create_alias(deployment)
-
-
-'''
