@@ -1,0 +1,19 @@
+local:
+ host: localhost
+ user: username 
+ group: groupname
+ mysql:
+  su: root
+  supassword: !!null
+  user: root
+  password: !!null
+target:
+ host: domain.com
+ user: admin
+ group: admin
+ mysql:
+  su: root
+  supassword: !!null
+  user: root
+  password: !!null
+

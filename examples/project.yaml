@@ -1,0 +1,16 @@
+developer:
+  server: local 
+  source: /path/to/drupal/root 
+  code: 
+    url: git@git.host.com:example.git,branch=master 
+  database:
+    type: updating
+  files:
+    type: updating
+  server: live
+  domain:
+    name: developer.mycompany.com
+    aliases:
+      - master.head.developer.mycompany.com
+      - review.mycompany.com
+
