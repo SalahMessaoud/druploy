@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# $Id$                        
+#
+# Simple wrapper script around fabric to call the Druploy tasks
+#
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+DIR=${DIR/%\/bin/}
+
+if [ $# -eq 0 ]
+    then
+        fab --fabfile=$DIR/fabfile.py --list
+    else
+        fab --fabfile=$DIR/fabfile.py "$@"
+fi
+
