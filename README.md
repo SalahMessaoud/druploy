@@ -4,7 +4,7 @@ druploy
 # Introduction #
 
 Druploy is an agile deployment tool based on Fabric and Drush that makes deploying instances of Drupal projects fast and easy.
-It depends on the Chef (https://github.com/willieseabrook/drupal-cookbook "Drupal Cookbook")
+It depends on the Chef [Drupal Cookbook](https://github.com/willieseabrook/drupal-cookbook)
 
 There are some other Drupal deployment tools available (e.g Aegir is an amazing tool) but they are quite heavy and don't work 
 as I would like with a number of standard scenarios.
@@ -19,10 +19,10 @@ Druploy intends to ease some very standard, day to day problems in the workflow 
 
 # Requirements #
 
-1. (http://www.python.org/ "Python 2.7.x")
-2. (http://docs.fabfile.org/en/1.8/ "Fabric")
+1. [Python 2.7.x](http://www.python.org/)
+2. [Fabric](http://docs.fabfile.org/en/1.8/)
 3. A server could be configured manually with Git, Drush, PHP, Apache, MySQl etc. But the best shortcut to configure your
-server is to use the accompanying chef Drupal recipe (https://github.com/willieseabrook/drupal-cookbook "Drupal Cookbook")
+server is to use the accompanying chef Drupal recipe [Drupal Cookbook](https://github.com/willieseabrook/drupal-cookbook)
 
 # Installation #
 
