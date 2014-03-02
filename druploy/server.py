@@ -4,7 +4,7 @@ from fabric.api import *
 from fabric.utils import *
 from fabric.colors import *
 from fabric.context_managers import *
-from fabric.contrib.files import exists
+from fabric.contrib.files import *
 from druploy.exceptions import *
 
 class Server:
@@ -64,6 +64,10 @@ class Server:
     def exists(self, path):
         with settings(**self.settings()):
             return exists(path)
+
+    def append(self, filepath, text):
+        with settings(**self.settings()):
+            append(filepath, text, use_sudo=False, escape=True)
 
     def copy(self, from_path, to_path, user=None, group=None, permissions=None, do_sudo=False):
         with settings(**self.settings()):
