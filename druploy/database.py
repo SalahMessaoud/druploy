@@ -44,7 +44,10 @@ class Database(object):
         with settings(**self.server.settings()):
             settings_php = join(site_directory, 'settings.php')
             if not self.server.exists(settings_php):
-                self.server.copy(join(site_directory, 'settings.default.php'), settings_php, permissions=0666)
+                self.server.copy(join(site_directory, 'default.settings.php'), settings_php)
+
+            self.server.append(settings_php, "@include('settings.local.php');");
+
             settings_local_php = join(site_directory, 'settings.local.php')
             if not self.server.exists(settings_local_php):
                 context = self.generate_settings()
@@ -113,7 +116,7 @@ class ResetToSnapshotDeploymentDatabaseSource(DatabaseDeploymentSource):
 
     def send(self, destination):
         try:
-            destination.assets.match(self.asset.generate_parameters(), ignore=['timestamp', 'revision']).list()[0]
+            destination.assets.match(self.generate_parameters('source'), ignore=['timestamp', 'revision']).list()[0]
         except IndexError, e:
             self.server.transfer(self.asset.path, destination.server, destination.path.source)
 
