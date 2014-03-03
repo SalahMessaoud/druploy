@@ -36,6 +36,7 @@ class CodeDeploymentDestination(GitWorkingCopy, DeploymentDestination):
 
     def prepare(self, source=None):
         self.checkout(source.revision_or_branch)
+        self.deployment.server.chown(self.drupal_site.path, 'admin', 'www-data', True, True)
 
     def deploy(self, source=None):
         Utils.notice("Deploying code")

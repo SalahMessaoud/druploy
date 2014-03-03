@@ -58,7 +58,7 @@ class Database(object):
 
     def generate_settings(self):
         settings = {
-            "host": "127.0.0.1",
+            "host": "localhost",
             "name": self.generate_name(),
             "username": self.deployment.project.name,
             "password": ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8))
@@ -144,6 +144,7 @@ class DatabaseDeploymentDestination(Database, DeploymentDestination):
         self.prepare_database()
         self.destination_filepath = join(self.path.source, source.asset.filename)
         self.deployment.drupal_site.drush.sql_import(self.destination_filepath)
+        self.deployment.drupal_site.drush.execute("cc all")
 
     def post_deploy(self, source):
         return
