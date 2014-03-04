@@ -4,14 +4,12 @@
 # Simple wrapper script around fabric to call the Druploy tasks
 #
 
-SOURCE="${BASH_SOURCE[0]}"
+SOURCE="$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")"
 while [ -h "$SOURCE" ]; do
     DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
     SOURCE="$(readlink "$SOURCE")"
-    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-DIR=${DIR/%\/bin/}
+DIR="$(cd $(dirname "$SOURCE") && cd ../ && pwd )"
 
 if [ $# -eq 0 ]
     then

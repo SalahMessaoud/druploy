@@ -32,6 +32,10 @@ class CodeDeploymentDestination(GitWorkingCopy, DeploymentDestination):
     def collect(self, source=None):
         if not self.cloned():
             source.clone(self.path)
+            
+        self.checkout(source.revision_or_branch)
+        # TODO: Do not prune when we copy this to working copy functionality
+        self.prune()   
         self.pull()
 
     def prepare(self, source=None):

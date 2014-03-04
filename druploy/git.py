@@ -24,6 +24,10 @@ class GitWorkingCopy(object):
         with cd(self.path):
             return run("git checkout {0}".format(revision_or_branch))
 
+    def prune(self):
+        with cd(self.path):
+            return run("git remote prune origin")
+
     def pull(self):
         with cd(self.path):
             return run("git pull")
